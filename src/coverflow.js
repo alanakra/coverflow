@@ -12,6 +12,7 @@ License: The MIT License
         } else if (navigator.userAgent.indexOf('Safari') != -1) {
             browserPrefix = "-webkit-";
         }
+        console.log(browserPrefix);
         const setTransform3D = function (el, degree, perspective, z) {
             degree = Math.max(Math.min(degree, 90), -90);
             z -= 5;
@@ -56,6 +57,7 @@ License: The MIT License
             displayIndex(imgSize, spacing, left, imgs, index, flat, width, titleBox);
         };
         const initCoverFlow = function (c) {
+            console.log(c)
             let imgSize   = parseInt(c.dataset.size) || 64,
                 spacing   = parseInt(c.dataset.spacing) || 10,
                 shadow    = (c.dataset.shadow == "true") || false,
@@ -67,6 +69,7 @@ License: The MIT License
                 imgHeight = 0,
                 imgs      = [],
                 placeholding;
+                console.log(imgSize, spacing, shadow, imgShadow, bgColor, flat, width, index, imgHeight, imgs, placeholding)
             for (let i = 0; i < c.childNodes.length; ++i)
                 if (c.childNodes[i].tagName)
                     imgs.push(c.childNodes[i]);
