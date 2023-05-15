@@ -4,7 +4,7 @@ License: The MIT License
 */
 (function(){
     window.onload = function () {
-        var browserPrefix = "";
+        let browserPrefix = "";
         if (navigator.userAgent.indexOf('Firefox') != -1) {
             browserPrefix = "-moz-";
         } else if (navigator.userAgent.indexOf('Chrome') != -1) {
@@ -12,15 +12,15 @@ License: The MIT License
         } else if (navigator.userAgent.indexOf('Safari') != -1) {
             browserPrefix = "-webkit-";
         }
-        var setTransform3D = function (el, degree, perspective, z) {
+        const setTransform3D = function (el, degree, perspective, z) {
             degree = Math.max(Math.min(degree, 90), -90);
             z -= 5;
             el.style["-webkit-perspective"] = el.style["perspective"] = el.style["-moz-perspective"] = perspective + "px";
             el.style["-webkit-transform"] = el.style["transform"] = "rotateY(" + degree + "deg) translateZ(" + z + "px)";
         };
-        var displayIndex = function (imgSize, spacing, left, imgs, index, flat, width, titleBox) {
-            var mLeft = (width - imgSize) * .5 - spacing * (index + 1) - imgSize * .5;
-            for (var i = 0; i <= index; ++i) {
+        const displayIndex = function (imgSize, spacing, left, imgs, index, flat, width, titleBox) {
+            let mLeft = (width - imgSize) * .5 - spacing * (index + 1) - imgSize * .5;
+            for (let i = 0; i <= index; ++i) {
                 imgs[i].style.left = (left + i * spacing + spacing) + "px";
                 imgs[i].style.marginLeft = mLeft + "px";
                 imgs[i].style["-webkit-filter"] = "brightness(0.65)";
@@ -33,13 +33,13 @@ License: The MIT License
             titleBox.style.visibility = "hidden";
             if (imgs[index].dataset.info) {
                 titleBox.style.visibility = "visible";
-                var info = imgs[index].dataset.info;
+                let info = imgs[index].dataset.info;
                 titleBox.innerHTML = info;
                 titleBox.style.left = (left + index * spacing + spacing + 10) + "px";
                 titleBox.style.marginLeft = (mLeft + imgSize * .5) + "px";
             }
             setTransform3D(imgs[index], 0, 0, 5);
-            for (var i = index + 1; i < imgs.length; ++i) {
+            for (let i = index + 1; i < imgs.length; ++i) {
                 imgs[i].style.left = (left + i * spacing + spacing) + "px";
                 imgs[i].style.marginLeft = (mLeft + imgSize) + "px";
                 imgs[i].style["-webkit-filter"] = "brightness(0.7)";
@@ -47,16 +47,16 @@ License: The MIT License
                 setTransform3D(imgs[i], flat ? 0 : ((index - i) * 10 - 45), 300, flat ? (index - i) * 10 : ((index - i) * 30 - 20));
             }
         };
-        var coverflowScroll = function (imgSize, spacing, c, imgs, flat, titleBox) {
-            var width = parseInt(c.style.width);
-            var p     = 1. * c.scrollLeft / width;
-            var index = Math.min(Math.floor(p * imgs.length), imgs.length - 1);
-            var left  = c.scrollLeft;
+        const coverflowScroll = function (imgSize, spacing, c, imgs, flat, titleBox) {
+            let width = parseInt(c.style.width);
+            let p     = 1. * c.scrollLeft / width;
+            let index = Math.min(Math.floor(p * imgs.length), imgs.length - 1);
+            let left  = c.scrollLeft;
             c.dataset.index = index;
             displayIndex(imgSize, spacing, left, imgs, index, flat, width, titleBox);
         };
-        var initCoverFlow = function (c) {
-            var imgSize   = parseInt(c.dataset.size) || 64,
+        const initCoverFlow = function (c) {
+            let imgSize   = parseInt(c.dataset.size) || 64,
                 spacing   = parseInt(c.dataset.spacing) || 10,
                 shadow    = (c.dataset.shadow == "true") || false,
                 imgShadow = !((c.dataset.imgshadow == "false") || false),
@@ -67,10 +67,10 @@ License: The MIT License
                 imgHeight = 0,
                 imgs      = [],
                 placeholding;
-            for (var i = 0; i < c.childNodes.length; ++i)
+            for (let i = 0; i < c.childNodes.length; ++i)
                 if (c.childNodes[i].tagName)
                     imgs.push(c.childNodes[i]);
-            for (var i = 0; i < imgs.length; ++i) {
+            for (let i = 0; i < imgs.length; ++i) {
                 imgs[i].style.position = "absolute";
                 imgs[i].style.width = imgSize + "px";
                 imgs[i].style.height = "auto";
@@ -82,7 +82,7 @@ License: The MIT License
             }
             c.style.overflowX = "scroll";
             c.style.backgroundColor = bgColor;
-            var titleBox = document.createElement("SPAN");
+            let titleBox = document.createElement("SPAN");
             if (!shadow) {
                 titleBox.className = "coverflow-title-box";
                 titleBox.style.position = "absolute";
@@ -113,7 +113,7 @@ License: The MIT License
             if (shadow) {
                 c.style.height = (imgHeight * 2 + 80) + "px";
                 c.style["-webkit-perspective-origin"] = c.style["perspective-origin"] = c.style["-moz-perspective-origin"] = "50% 25%";
-                for (var i = 0; i < imgs.length; ++i) {
+                for (let i = 0; i < imgs.length; ++i) {
                     imgs[i].style.bottom = (20 + imgHeight) + "px";
                     imgs[i].style["-webkit-box-reflect"] = "below 0 -webkit-gradient(linear, 30% 20%, 30% 100%, from(transparent), color-stop(0.3, transparent), to(rgba(0, 0, 0, 0.8)))";
                 }
@@ -124,14 +124,14 @@ License: The MIT License
             c.onscroll = function () {
                 coverflowScroll(imgSize, spacing, c, imgs, flat, titleBox);
             };
-            for (var i = 0; i < imgs.length; ++i)
+            for (let i = 0; i < imgs.length; ++i)
                 imgs[i].onclick = function () {
                     displayIndex(imgSize, spacing, c.scrollLeft, imgs, imgs.indexOf(this), flat, parseInt(c.style.width), titleBox);
                 }
             displayIndex(imgSize, spacing, c.scrollLeft, imgs, +c.dataset.index, flat, parseInt(c.style.width), titleBox);
         };
-        var coverflows = document.getElementsByClassName("coverflow");
-        for (var i = 0; i < coverflows.length; ++i)
+        const coverflows = document.getElementsByClassName("coverflow");
+        for (let i = 0; i < coverflows.length; ++i)
             initCoverFlow(coverflows[i]);
-    }
+        }
 })();
