@@ -5,7 +5,6 @@ body {
     left: 0;
     right: 0;
     margin: auto;
-    -webkit-font-smoothing: subpixel-antialiased;
 }
 .coverflow {
     left: 0;
