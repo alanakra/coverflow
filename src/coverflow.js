@@ -71,8 +71,9 @@ License: The MIT License
                 // console.log(imgSize, spacing, shadow, imgShadow, bgColor, flat, width, index, imgHeight, imgs, placeholding)
                 console.log(c.childNodes);
             for (let i = 0; i < c.childNodes.length; ++i)
-                if (c.childNodes[i].tagName)
+                if (c.childNodes[i].tagName === 'IMG')
                     imgs.push(c.childNodes[i]);
+                    console.log(imgs);
             for (let i = 0; i < imgs.length; ++i) {
                 imgs[i].style.position = "absolute";
                 imgs[i].style.width = imgSize + "px";
