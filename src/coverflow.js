@@ -53,8 +53,9 @@ License: The MIT License
             let index = Math.min(Math.floor(p * imgs.length), imgs.length - 1);
             let left  = c.scrollLeft;
             c.dataset.index = index;
-            console.log(index);
+            // console.log(index);
             displayIndex(imgSize, spacing, left, imgs, index, flat, width, titleBox);
+            showDirectionBtn(index, imgs.length, c);
         };
         const initCoverFlow = function (c) {
             let imgSize   = parseInt(c.dataset.size) || 64,
@@ -134,6 +135,28 @@ License: The MIT License
                 }
             displayIndex(imgSize, spacing, c.scrollLeft, imgs, +c.dataset.index, flat, parseInt(c.style.width), titleBox);
         };
+        const showDirectionBtn = function (index, arr, c) {
+            arr = arr - 1;
+            console.log('Index: ' + index);
+            console.log ('let arr: ' + arr);
+            console.log(c);
+            const previousButton = c.querySelector('[data-direction="previous"]');
+            const nextButton = c.querySelector('[data-direction="next"]');
+            console.log(previousButton);
+            console.log(nextButton);
+
+            if (index === 0) {
+                console.log('START !!!!');
+                previousButton.style.display = "none";
+            } else {
+                previousButton.style.display = "block";
+            }
+            
+            if (index === arr) {
+                console.log('END !!!!');
+                console.log(c.childNodes);
+            }
+        }
         const coverflows = document.getElementsByClassName("coverflow");
         for (let i = 0; i < coverflows.length; ++i)
             initCoverFlow(coverflows[i]);

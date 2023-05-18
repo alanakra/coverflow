@@ -12,6 +12,23 @@ body {
     right: 0;
     margin: auto;
 }
+.coverflow > .prev,
+.coverflow > .next {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    position: sticky;
+    z-index: 100;
+    transform: translateY(-50%);
+}
+.coverflow > .prev {
+    left: 5%;
+    top: 50%;
+}
+.coverflow > .next {
+    right: 5%;
+    top: 50%;
+}
 #div-A {
     background: yellow;
 }
