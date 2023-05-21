@@ -1,6 +1,6 @@
 /*
-Author:  github.com/quietshu
-License: The MIT License
+Author:  github.com/alanakra
+Forked from github.com/quietshu
 */
 (function(){
     window.onload = function () {
