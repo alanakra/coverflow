@@ -56,6 +56,9 @@ Forked from github.com/quietshu
             displayIndex(imgSize, spacing, left, imgs, index, flat, width, titleBox);
         };
         const initCoverFlow = function (c) {
+            let touchStartX = 0;
+            let touchEndX = 0;
+
             let imgSize   = parseInt(c.dataset.size) || 64,
                 spacing   = parseInt(c.dataset.spacing) || 10,
                 shadow    = (c.dataset.shadow == "true") || false,
@@ -67,6 +70,9 @@ Forked from github.com/quietshu
                 imgHeight = 0,
                 imgs      = [],
                 placeholding;
+            c.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+            }, { passive: true });
             for (let i = 0; i < c.childNodes.length; ++i)
                 if (c.childNodes[i].tagName)
                     imgs.push(c.childNodes[i]);
@@ -79,6 +85,28 @@ Forked from github.com/quietshu
                     imgs[i].style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.3)";
                 imgs[i].style["transition"] = prefix + "transform .4s ease, margin-left .4s ease, -webkit-filter .4s ease";
                 imgHeight = Math.max(imgHeight, imgs[i].getBoundingClientRect().height);
+
+                imgs[i].addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].clientX;
+                });
+            
+                imgs[i].addEventListener('touchmove', (e) => {
+                    touchEndX = e.changedTouches[0].clientX;
+                    let distanceMoved = touchEndX - touchStartX;
+                    c.scrollLeft -= distanceMoved;
+                });
+            
+                imgs[i].addEventListener('touchend', () => {
+                    const touchDistance = touchEndX - touchStartX;
+            
+                    if (touchDistance > 50) {
+                        c.scrollLeft -= imgSize + spacing;
+                    } else if (touchDistance < -50) {
+                        c.scrollLeft += imgSize + spacing;
+                    }
+                    touchEndX = 0;
+                    touchStartX = 0;
+                });
             }
             c.style.overflowX = "scroll";
             c.style.backgroundColor = bgColor;
