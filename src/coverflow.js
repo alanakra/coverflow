@@ -58,6 +58,8 @@ Forked from github.com/quietshu
         const initCoverFlow = function (c) {
             let touchStartX = 0;
             let touchEndX = 0;
+            let pendingScrollUpdate = false;
+            let totalDistanceToMove = 0;
 
             let imgSize   = parseInt(c.dataset.size) || 64,
                 spacing   = parseInt(c.dataset.spacing) || 10,
@@ -70,6 +72,13 @@ Forked from github.com/quietshu
                 imgHeight = 0,
                 imgs      = [],
                 placeholding;
+
+            function updateScrollPosition() {
+                c.scrollLeft -= totalDistanceToMove;
+                totalDistanceToMove = 0;
+                pendingScrollUpdate = false;
+            }
+
             c.addEventListener('touchmove', (e) => {
                 e.preventDefault();
             }, { passive: true });
@@ -93,7 +102,11 @@ Forked from github.com/quietshu
                 imgs[i].addEventListener('touchmove', (e) => {
                     touchEndX = e.changedTouches[0].clientX;
                     let distanceMoved = touchEndX - touchStartX;
-                    c.scrollLeft -= distanceMoved;
+                    totalDistanceToMove += distanceMoved;
+                    if (!pendingScrollUpdate) {
+                        pendingScrollUpdate = true;
+                        requestAnimationFrame(updateScrollPosition);
+                    }
                 });
             
                 imgs[i].addEventListener('touchend', () => {
