@@ -59,3 +59,7 @@ pre {
 .demo {
     margin: 3em 0;
 }
+
+.coverflow img {
+    will-change: transform, margin-left;
+}

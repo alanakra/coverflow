@@ -86,6 +86,7 @@ Forked from github.com/quietshu
                 if (c.childNodes[i].tagName)
                     imgs.push(c.childNodes[i]);
             for (let i = 0; i < imgs.length; ++i) {
+                imgs[i].style.willChange = "transform, margin-left";
                 imgs[i].style.position = "absolute";
                 imgs[i].style.width = imgSize + "px";
                 imgs[i].style.height = "auto";
